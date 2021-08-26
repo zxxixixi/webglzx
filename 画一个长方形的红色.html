@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var gl = null
+        function Init(){
+            var canvas = document.getElementById("mycanvas")
+            gl = canvas.getContext('webgl')
+            gl.viewport(40,0,canvas.clientWidth-200,canvas.clientHeight-200)
+            gl.clearColor(1.0,0.0,0.0,1.0)
+            gl.clear(gl.COLOR_BUFFER_BIT) //按颜色缓冲区清除背景 还有深度缓冲区等等
+        }
+        var canvas 
+    </script>
+</head>
+<body onload="Init()">
+    <canvas id="mycanvas" width="300" height="300"></canvas>
+    
+</body>
+</html>

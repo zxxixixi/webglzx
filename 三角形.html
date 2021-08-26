@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script id="shader-vs" type="notjs">
+        attribute vec3 v3Position;
+        void main(void){
+            gl_Position = vec4(v3Position, 1.0)
+        }
+    </script>
+    <script id="shader-fs" type="notjs">
+        precision mediump float;
+        void main(void){
+            gl_FragColor = vec4(1.0,1.0,1.0,1.0)
+        }
+    </script>
+    <script>
+        function getShaderSource(id){
+            var shaderScript=document.getElementById(id)
+            if(shaderScript==null) return ""
+            var sourceCode = '' 
+            var child = shaderScript.firstChild
+            while(child){
+              console.log(child.nodeType,child.TEXT_NODE,child.textContent,child.nextSibling);
+              if(child.nodeType == child.TEXT_NODE) sourceCode+=child.textContent;
+              child = child.nextSibling
+            }
+            return sourceCode
+        }
+        var webgl = null
+        var vertexShaderSource =null
+        var fragmentShaderSource = null
+        var programObject =null
+        var v3PositionIndex = 0
+        function Init(){
+            let canvas = document.getElementById('mucanvas')
+            let gl = canvas.getContext('webgl')
+            gl.viewport(0,0,canvas.clientWidth,canvas.clientHeight)
+            vertexShaderSource = gl.createShader(gl.VERTEX_SHADER)
+            fragmentShaderSource = gl.createShader(gl.FRAGMENT_SHADER)
+            gl.shaderSource(vertexShaderSource, document.querySelector("#shader-vs").text)
+            gl.shaderSource(fragmentShaderSource, document.querySelector("#shader-fs").text)
+            gl.compileShader(vertexShaderSource)
+            gl.compileShader(fragmentShaderSource)
+            // if(!gl.getShaderParamter(vertexShaderSource, gl.COMPILE_STATUS)){//编译出错
+            //     alter('eee')
+            //     return
+            // }
+            // if(!gl.getShaderParamter(fragmentShaderSource, gl.COMPILE_STATUS)){//编译出错
+            //     alter('eee')
+            //     return
+            // }
+            programObject = gl.createProgram()
+            gl.attachShader(programObject,vertexShaderSource)
+            gl.attachShader(programObject,fragmentShaderSource)
+            gl.bindAttribLocation(programObject,v3PositionIndex,'v3Positon')
+            gl.linkProgram(programObject)
+            // if(!gl.getProgramParameter(programObject, gl.LINK_STATUS)){//编译出错
+            //     alter('eee')
+            //     return
+            // }
+            // gl.useProgram(programObject)
+            var jsArrayData = [
+                0.0, 1.0, 0.0, //上顶点
+                -1.0, -1,0, 0.0, //左顶点
+                1.0,-1.0,0.0 //右顶点
+            ]
+            let trianfleBuffer =gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER,trianfleBuffer)
+            gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(jsArrayData),gl.STATIC_DRAW)
+            gl.clearColor(0.0, 1.0, 0.0,1.0)
+            gl.clear(gl.COLOR_BUFFER_BIT)
+            gl.bindBuffer(gl.ARRAY_BUFFER,trianfleBuffer)
+            gl.enableVertexAttribArray(v3PositionIndex)
+            gl.vertexAttribPointer(v3PositionIndex,3,gl.FLOAT,false,0,0)
+            gl.drawArrays(gl.TRIANGLES,0,3)
+        }
+    </script>
+</head>
+<body onload="Init()">
+    <canvas id="mucanvas" width="500" height="500"></canvas>
+</body>
+</html>
