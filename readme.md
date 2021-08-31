@@ -40,7 +40,15 @@ v.bgra和vec4(v.b, v.g, v.r, v.a)是一样的
 v.yyyy和vec4(v.y, v.y, v.y, v.y)是一样的
 vec4(v.rgb, 1)和vec4(v.r, v.g, v.b, 1)是一样的
 vec4(1)和vec4(1, 1, 1, 1)是一样的
-
+vec4 s = sin(v)和vec4 s = vec4(sin(v.x), sin(v.y), sin(v.z), sin(v.w))一样
+vec4 m = mix(v1, v2, f)
+和
+vec4 m = vec4(
+  mix(v1.x, v2.x, f),
+  mix(v1.y, v2.y, f),
+  mix(v1.z, v2.z, f),
+  mix(v1.w, v2.w, f))
+一样
 
 GLSL是一个强类型的语言*******
 float f = 1;  // 错误，1是int类型，不能将int型赋值给float
