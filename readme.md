@@ -15,7 +15,8 @@
              使用程序之前可---> getAttribLocation createBuffer bindBuffer bufferData  viewport  clearColor  clear
         7. 使用program--useProgram
              使用程序之后可---> enableVertexAttribArray bindBuffer vertexAttribPointer
-
+-----初始化纹理
+-----纹理加载完成(做y轴翻转,激活纹理区，数据)
  7. 开始绘制，显示器显示结果--drawArrays
 
 
